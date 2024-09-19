@@ -3,9 +3,7 @@ from functools import reduce
 temps_courant = 0 # doit etre inferieur au temps mis
 distance_parcourue = 0 #doit etre superieur à la distance
 temps_chargement = 0
-point = 0
-time=7
-distance = 9
+
 with open('entrer','r') as file:
     Time = file.readline()
     Time = Time.split(":")[1].split()
