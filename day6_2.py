@@ -4,7 +4,6 @@ with open('entrer', 'r') as file:
     for time in file:
         time = re.split(':',time)
         time = [i for i in time[1] if i != ' ']
-        time = time
         heure = ''
         for i in time :
             heure+=i
