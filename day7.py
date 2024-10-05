@@ -11,22 +11,14 @@ with open('entrer', 'r') as file:
     classement = []
     for line in file:
         mains = re.split('[ -]', line.strip())
-        if len(mains) ==2:
-            main = mains[0]
-            enchere = mains[1]
-        elif len(mains) == 1:
-            main = line[:5]
-            enchere = line[-3:]
-        elif len(mains) == 3:
-            main = mains[0]+mains[1]
-            enchere = mains[2]
+        main = mains[0]
+        enchere = mains[1]
         redondance = Counter(main)
 
         # Fonction de tri qui gère plusieurs caractères
         def tri(tup):
             card_str = tup[0]
             return [ordre_cartes.get(c, -1) for c in card_str]  # -1 pour les caractères non présents dans l'ordre
-
 
         grd_redondance = max(redondance.values())
         if grd_redondance == 5: compteur['five'].append((main,enchere))
