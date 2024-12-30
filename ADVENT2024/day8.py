@@ -16,7 +16,7 @@ longueur = len(puzzle[1])-1
 hauteur = len(puzzle)-1
 
 coordonnees = get_coordonnees(puzzle)
-antinoeuds = []
+antinoeuds = set()
 for lettre, liste_tuples in coordonnees.items():
 
     for i in range(len(liste_tuples)):
@@ -28,11 +28,10 @@ for lettre, liste_tuples in coordonnees.items():
             antinoeud2Y = liste_tuples[j][1] + (liste_tuples[j][1] - liste_tuples[i][1])
 
             if 0 <= antinoeud1X <= longueur and 0 <= antinoeud1Y <= hauteur:
-                if (antinoeud1X, antinoeud1Y) not in antinoeuds:
-                    antinoeuds.append((antinoeud1X, antinoeud1Y))
+                # .add() ajoute l'élement s'il n'existe pas déjà
+                antinoeuds.add((antinoeud1X, antinoeud1Y))
 
             if 0 <= antinoeud2X <= longueur and 0 <= antinoeud2Y <= hauteur:
-                if (antinoeud2X, antinoeud2Y) not in antinoeuds:
-                    antinoeuds.append((antinoeud2X, antinoeud2Y))
+                antinoeuds.add((antinoeud2X, antinoeud2Y))
 
 print(len(antinoeuds))
