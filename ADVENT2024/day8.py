@@ -15,10 +15,13 @@ def calcul_antinoeud(coordonnees, longueur, hauteur):
         for i in range(len(liste_tuples)):
             for j in range(i + 1, len(liste_tuples)):
                 # je calcul les coordinates des deux antinoeuds
-                antinoeud1X = liste_tuples[i][0] - (liste_tuples[j][0] - liste_tuples[i][0])
-                antinoeud1Y = liste_tuples[i][1] - (liste_tuples[j][1] - liste_tuples[i][1])
-                antinoeud2X = liste_tuples[j][0] + (liste_tuples[j][0] - liste_tuples[i][0])
-                antinoeud2Y = liste_tuples[j][1] + (liste_tuples[j][1] - liste_tuples[i][1])
+                diffX = liste_tuples[j][0] - liste_tuples[i][0]
+                diffY = liste_tuples[j][1] - liste_tuples[i][1]
+
+                antinoeud1X = liste_tuples[i][0] - diffX
+                antinoeud1Y = liste_tuples[i][1] - diffY
+                antinoeud2X = liste_tuples[j][0] + diffX
+                antinoeud2Y = liste_tuples[j][1] + diffY
 
                 if 0 <= antinoeud1X <= longueur and 0 <= antinoeud1Y <= hauteur:
                     # .add() ajoute l'élement s'il n'existe pas déjà
