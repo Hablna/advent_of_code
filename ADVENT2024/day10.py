@@ -1,17 +1,21 @@
 from collections import deque
 
-entree = [
-    ['.', '.', '.', 0, '.', '.', '.'],
-    ['.', '.', '.', 1, '.', '.', '.'],
-    ['.', '.', '.', 2, '.', '.', '.'],
-    [6,5,4,3,4,5,6],
-    ['7', '.', '.', '.', '.', '.', '7'],
-    ['8', '.', '.', '.', '.', '.', '8'],
-    ['9', '.', '.', '.', '.', '.', '9'],
-]
+with open('entree', 'r') as file:
+    donnee = file.readlines()
+    entree = []
+    for i in  donnee:
+        rows = []
+        i = i.strip()
+        for j in i:
+            rows.append(int(j))
+        entree.append(rows)
+print(entree)
 
 rows = len(entree)
+print(rows)
 cols = len(entree[0])
+print(cols)
+
 #Directions
 directions = [(-1,0), (1,0), (0,-1), (0,1)]
 
@@ -20,13 +24,13 @@ def bfs(start_i, start_j):
     queue = deque()
     queue.append((start_i, start_j))
     visited.add((start_i, start_j))
-    found_nine = False
+    count = 0
 
     while queue:
         i, j = queue.popleft()
         current_value = entree[i][j]
         if current_value == 9 :
-            found_nine = True
+            count += 1
             continue
 
         for di, dj in directions:
@@ -37,13 +41,12 @@ def bfs(start_i, start_j):
                     visited.add((ni, nj))
                     queue.append((ni, nj))
 
-    return found_nine
-
+    return count
 count = 0
+#detect zero
 for i in range(rows):
     for j in range(cols):
         if entree[i][j] == 0:
-            if bfs(i, j):
-                count+=1
+            count += bfs(i, j)
 
 print(count)
