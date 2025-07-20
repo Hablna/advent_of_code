@@ -15,3 +15,4 @@ for i in range (25):
             new_tab.append( str(int(j) * 2024))
     entree = new_tab
 print(len(entree))
+6

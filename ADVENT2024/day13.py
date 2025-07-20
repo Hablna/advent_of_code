@@ -3,11 +3,14 @@ def resolve_equation(Ax, Ay, Bx, By, targetx, targety):
     deta = (targetx * By) - (targety * Ay)
     detb = (targety * Ax) - (targetx * Bx)
 
-    if det != 0 and deta % det == 0 and detb % det == 0:
+    #print('deter:',det,' deta: ',deta,' detb: ',detb)
+
+    if det != 0:
         a = deta // det
         b = detb // det
         if a>=0 and b>=0:
             cost = 3 * a + b
+            print(a, b)
         else:
             cost = 0
     else:
