@@ -1,20 +1,27 @@
-def resolve_equation(Ax, Ay, Bx, By, targetx, targety):
-    det = (Ax * By) - (Ay * Bx)
-    deta = (targetx * By) - (targety * Ay)
-    detb = (targety * Ax) - (targetx * Bx)
+import math
+import re
 
-    #print('deter:',det,' deta: ',deta,' detb: ',detb)
+import numpy as np
 
-    if det != 0:
-        a = deta // det
-        b = detb // det
-        if a>=0 and b>=0:
-            cost = 3 * a + b
-            print(a, b)
-        else:
-            cost = 0
-    else:
-        cost = 0
-    return cost
+def solve(xa,ya ,xb, yb,targetx, targety):
+    sys = np.array(
+        [[xa, xb],
+         [ya, yb]]
+    )
+    det = np.linalg.det(sys)
+    if det == 0:
+        return 0
+    vector = np.array([targetx, targety])
 
-print(resolve_equation(94, 34, 22, 67, 8400, 5400))
+    ka, kb = np.linalg.solve(sys, vector)
+
+    return math.floor(ka*3 + kb)
+
+#print(solve(94, 22, 34, 67, 8400, 5400))
+with open('entree', 'r') as f:
+    f = f.read().strip().split('\n\n')
+for block in f:
+    numbers = re.findall(r'-?\d+', block)
+    numbers = [int(n) for n in numbers]
+    solution = solution + solve(numbers)
+    print(solution)
