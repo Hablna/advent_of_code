@@ -38,3 +38,4 @@ for block in f:
     numbers = [int(n) for n in numbers]
     solution = solution +solve_machine(numbers[0], numbers[1], numbers[2], numbers[3], numbers[4], numbers[5])
 print(solution)
+# Code pour la partie 2
