@@ -1,47 +1,39 @@
 import re
+from collections import Counter
 
-p = [2, 4, 2, -3]
-width = 101
-height = 103
-def update_position(p):
-    x = int(p[0])
-    y = int(p[1])
-    vx = int(p[2])
-    vy = int(p[3])
+WIDTH, HEIGHT = 101, 103
 
-    for i in range(100):
-        x = (x + vx) % width
-        y = (y + vy) % height
-    return x, y
+def pos_after_t(x, y, vx, vy, t, w=WIDTH, h=HEIGHT):
+    # Avance directement de t secondes sur un tore
+    return (x + vx * t) % w, (y + vy * t) % h
 
 if __name__ == "__main__":
-    positions = []
-    occurrences = {}
-    with open('entree', 'r') as f:
-        f = f.read().strip().split('\n')
+    robots = []  # liste de tuples (x, y, vx, vy)
+    with open("entree", "r") as f:
         for line in f:
-            p = re.findall(r'-?\d+', line)
-            print(p)
-            coord = update_position(p)
-            if coord not in positions:
-                occurrences[coord] = 1
-                positions.append(coord)
-            else:
-                occurrences[coord] += 1
+            # format attendu : p=xx,yy v=dx,dy (mais le regex attrape juste les nombres)
+            x, y, vx, vy = map(int, re.findall(r"-?\d+", line))
+            robots.append((x, y, vx, vy))
 
-    total1 = 0
-    total2 = 0
-    total3 = 0
-    total4 = 0
-    for coord, count in occurrences.items():
-        x,y = coord
-        if x < width//2 and y < height//2:
-            total1 += count
-        elif x > width//2 and y < height//2:
-            total2 += count
-        elif x < width//2 and y > height//2:
-            total3 += count
-        elif x > width//2 and y > height//2:
-            total4 += count
+    # --- Part 1 : t = 100 secondes ---
+    t = 100
+    occ = Counter()
+    for x, y, vx, vy in robots:
+        nx, ny = pos_after_t(x, y, vx, vy, t)
+        occ[(nx, ny)] += 1
 
-    print(total1 * total2 * total3 * total4)
+    q1 = q2 = q3 = q4 = 0
+    mx, my = WIDTH // 2, HEIGHT // 2  # 50, 51
+
+    for (x, y), count in occ.items():
+        if x < mx and y < my:
+            q1 += count
+        elif x > mx and y < my:
+            q2 += count
+        elif x < mx and y > my:
+            q3 += count
+        elif x > mx and y > my:
+            q4 += count
+        # si x == mx ou y == my, ignoré (lignes médianes)
+
+    print(q1 * q2 * q3 * q4)
