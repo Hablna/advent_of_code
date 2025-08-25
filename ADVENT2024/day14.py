@@ -1,31 +1,18 @@
 import re
 
 p = [2, 4, 2, -3]
-
+width = 101
+height = 103
 def update_position(p):
     x = int(p[0])
     y = int(p[1])
     vx = int(p[2])
     vy = int(p[3])
 
-    width = 11
-    height = 7
-
     for i in range(100):
-        if x + vx > width:
-            x = (x + vx) - width
-        elif x + vx < 0:
-            x = width + (x + vx)
-        else:
-            x = x + vx
-
-        if y + vy > height:
-            y = (y + vy) - height
-        elif y + vy < 0:
-            y = height + (y + vy)
-        else:
-            y = y + vy
-    return (x, y)
+        x = (x + vx) % width
+        y = (y + vy) % height
+    return x, y
 
 if __name__ == "__main__":
     positions = []
@@ -34,13 +21,27 @@ if __name__ == "__main__":
         f = f.read().strip().split('\n')
         for line in f:
             p = re.findall(r'-?\d+', line)
+            print(p)
             coord = update_position(p)
-            if coord not in occurrences:
+            if coord not in positions:
                 occurrences[coord] = 1
                 positions.append(coord)
             else:
                 occurrences[coord] += 1
 
-    print(p)
-    print("Positions:", positions)
-    print("Occurrences:", occurrences)
+    total1 = 0
+    total2 = 0
+    total3 = 0
+    total4 = 0
+    for coord, count in occurrences.items():
+        x,y = coord
+        if x < width//2 and y < height//2:
+            total1 += count
+        elif x > width//2 and y < height//2:
+            total2 += count
+        elif x < width//2 and y > height//2:
+            total3 += count
+        elif x > width//2 and y > height//2:
+            total4 += count
+
+    print(total1 * total2 * total3 * total4)
