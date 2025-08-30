@@ -8,3 +8,4 @@ for i in ordres:
     for j in listes:
         if (i[0] and i[1]) in j :
             print(f"{i[0]} et {i[1]}existent dans", j)
+ # j'arrive
