@@ -4,16 +4,31 @@ with open("entree", "r") as f:
     listes = [ligne.split(",") for ligne in liste.split("\n")]
 
 somme = 0
+invalides = []
 for i in listes:
     ok = True
     for j in ordres:
         if (j[0] in i) and (j[1] in i) and (i.index(j[0]) > i.index(j[1])):
             ok = False
-            a = i.pop(i.index(j[0]))
-            i.insert(i.index(j[1])-1, a)
-
+            break
     if not ok :
-        somme += int(i[len(i)//2])
-        print(i)
+        invalides.append(i)
+
+def corriger_par_swaps(mise_a_jour, ordres):
+    mj = mise_a_jour[:]  # copie
+    changed = True
+    while changed:
+        changed = False
+        for a, b in ordres:  # règle: a avant b
+            if a in mj and b in mj:
+                ia, ib = mj.index(a), mj.index(b)
+                if ia > ib:
+                    mj[ia], mj[ib] = mj[ib], mj[ia]  # swap
+                    changed = True
+    return mj
+print (invalides)
+for invalide in invalides:
+    corrected = corriger_par_swaps(invalide, ordres)
+    somme += int(corrected[len(corrected)//2])
 
 print(somme)
