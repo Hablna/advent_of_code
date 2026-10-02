@@ -3,7 +3,7 @@ package org.example;
 import java.nio.file.*;
 import java.util.*;
 
-public class Day10 {
+public class day11 {
 
     static final String INPUT =
             "C:\\Users\\HALIROUNAMANOU-32255\\IdeaProjects\\test\\src\\main\\java\\org\\example\\entree";
